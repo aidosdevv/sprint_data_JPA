@@ -32,6 +32,13 @@
                             <label for="price" class="col-form-label">Price</label>
                             <input  type="number"  class="form-control" id="price" name="food_price">
                         </div>
+                        <div class="form-group">
+                            <!-- Выборка. С ее помощью можно выбрать страну-производителя для машины -->
+                            <label for="man_id" class="col-form-label">Manufacturer</label>
+                            <select class="form-select" id="man_id" aria-label="man_id" name="manufacturer_id" required>
+                                <option th:each="man : ${manufacturers}" th:value="${man.id}" th:text="${man.name + ' / ' + man.code}"></option>
+                            </select>
+                        </div>
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">ADD</button>

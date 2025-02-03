@@ -10,6 +10,7 @@
         <th scope="col">Calories</th>
         <th scope="col">Amount</th>
         <th scope="col">Price</th>
+        <th scope="col">Country</th>
         <th scope="col">
           Edit
         </th>
@@ -23,21 +24,25 @@
         <td th:text="${food.getCalories()}"></td>
         <td th:text="${food.getAmounts()}"></td>
         <td th:text="${food.getPrice()}"></td>
+        <td class="pt-3">
+          <!-- Страна-производитель будет отображена в данной ячейке таблицы, если она присутствует (в базе данных в таблице cars в столбце country_id присутствует значение) -->
+          <span th:if="${food.manufacturer != null}" th:text="${food.manufacturer.code}"></span>
+          <!-- Если страна-производитель отсутствует, то в данной ячейке таблицы будет отобраено UNKNOWN -->
+          <i th:unless="${food.manufacturer != null}" class="text-secondary">UNKNOWN</i>
+        </td>
         <td>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Edit
           </button>
 
-          <!-- The Modal -->
           <div class="modal" id="myModal">
             <div class="modal-dialog">
               <div class="modal-content">
 
-                <!-- Modal Header -->
                 <form class="card px-3 py-3 mt-2" method="post" th:action="@{'/updatefood'}">
+
                   <h2 class="text-center mb-3">Edit Food</h2>
 
-                  <!-- Так как идентификатор не должен изменяться, он не будет отображен в форме, но будет передан в качестве параметра HTTP-запроса -->
                   <input type="hidden" name="food_id" th:value="${food.id}">
 
                   <div class="form-floating mb-3">
@@ -56,9 +61,16 @@
                     <input type="number" class="form-control" id="food_price"  name="food_price" th:value="${food.price}" required>
                     <label for="food_price">Price</label>
                   </div>
+                  <div class="form-floating mb-3">
+                    <select class="form-select" id="country_id" aria-label="country_id" name="manu_id" required>
+                      <option th:each="manu : ${manufacturers}" th:value="${manu.id}" th:text="${manu.name + ' / ' + manu.code}"></option>
+                    </select>
+                    <label for="country_id">Country</label>
+                  </div>
                   <div class="d-grid gap-2 col-4 mx-auto">
                     <button class="btn btn-success" type="submit">SAVE</button>
                   </div>
+
                 </form>
               </div>
             </div>

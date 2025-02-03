@@ -7,23 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "foods")
+@Table(name = "manufacturer")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Food {
-
+public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private int calories;
-    private int amounts;
-    private int price;
 
-    @JoinColumn(name = "manufacturer_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Manufacturer manufacturer;
+    private String code;
 }
